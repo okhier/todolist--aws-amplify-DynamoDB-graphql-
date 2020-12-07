@@ -1,0 +1,26 @@
+.todo-main {
+    display: flex;
+    width: 700px;
+    flex-direction: column;
+    margin: 0 auto;
+    padding-top: 3rem;
+}
+
+.todo-list-wrapper{
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  font-size: 2rem;
+}
+
+.todo-list {
+    cursor: pointer;
+}
+
+.todo-list:hover {
+    background-color: grayscale($color: #a0a0a0)
+} 
+
+.todo-list-delete {
+    justify-content: flex-end;
+    color: red !important;
+}
