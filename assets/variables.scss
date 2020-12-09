@@ -14,13 +14,28 @@
 
 .todo-list {
     cursor: pointer;
+    padding-right: 3rem;
 }
 
 .todo-list:hover {
     background-color: grayscale($color: #a0a0a0)
-} 
+}
+
+.todo-list-item {
+}
+
+.todo-list-item.checked{
+    background: linear-gradient(transparent 40%, #777770 70%);
+}
+
+.todo-list-button{
+    float:right;
+}
 
 .todo-list-delete {
-    justify-content: flex-end;
     color: red !important;
 }
+
+.todo-list-checker {
+}
+

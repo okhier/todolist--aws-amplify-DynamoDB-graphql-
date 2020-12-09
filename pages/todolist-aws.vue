@@ -1,21 +1,30 @@
 <template>
   <div class="todo-main">
     <h1>TodoApp</h1>
-    <v-text-field v-model="name" label="Name"></v-text-field>
-    <v-text-field v-model="description" label="やること"></v-text-field>
+    <v-text-field v-model="name" label="date-日付"></v-text-field>
+    <v-text-field v-model="description" label="todo-やること"></v-text-field>
     <v-btn @click="createTodo">Create</v-btn>
     <ul class="todo-list-wrapper">
       <li
         v-for="todo in todos"
         :key="todo.id"
         class="todo-list"
-        @click="handleCheckedTogle(todo.id, todo.checked)"
+        @click="handleCheckedToggle(todo.id, todo.checked)"
       >
-        {{ todo.name }} : {{ todo.description }}
-        <v-icon v-if="todo.checked === true">mdi-check-bold</v-icon>
-        <v-icon class="todo-list-delete" @click="handleDelete(todo.id, $event)">
-          mdi-window-close</v-icon
+        <span class="todo-list-item" :class="{ checked: todo.checked }"
+          >{{ todo.name }} : {{ todo.description }}</span
         >
+        <span class="todo-list-button">
+          <v-icon v-if="todo.checked === true" class="todo-list-checker"
+            >mdi-check-bold</v-icon
+          >
+          <v-icon
+            class="todo-list-delete"
+            @click="handleDelete(todo.id, $event)"
+          >
+            mdi-window-close</v-icon
+          >
+        </span>
       </li>
     </ul>
   </div>
@@ -55,7 +64,8 @@ export default {
         variables: { input: { id } },
       })
     },
-    async handleCheckedTogle(todoId, todoChecked) {
+    async handleCheckedToggle(todoId, todoChecked) {
+      this.id = todoId
       await API.graphql(
         graphqlOperation(updateTodo, {
           input: { id: todoId, checked: !todoChecked },
@@ -66,6 +76,17 @@ export default {
       const { name, description, type, checked } = this
       if (!name || !description) return false
       const todo = { name, description, type, checked }
+      if (
+        this.todos.some(
+          (item) =>
+            item.name === todo.name && item.description === todo.description
+        )
+      ) {
+        alert('既に同じ内容が登録されております。')
+        this.name = ''
+        this.description = ''
+        return
+      }
       await API.graphql({
         query: createTodo,
         variables: { input: todo },
@@ -89,7 +110,7 @@ export default {
                 item.name === todo.name && item.description === todo.description
             )
           )
-            return // remove duplications
+            return
           this.todos = [...this.todos, todo]
         },
       })
@@ -103,7 +124,10 @@ export default {
       })
       API.graphql({ query: onUpdateTodo }).subscribe({
         next: (eventData) => {
-          this.todos = this.getTodos()
+          const toggledIndex = this.todos.findIndex(
+            (todo) => todo.id === this.id
+          )
+          this.todos[toggledIndex].checked = !this.todos[toggledIndex].checked
         },
       })
     },
