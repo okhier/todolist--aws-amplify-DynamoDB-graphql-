@@ -1,3 +1,4 @@
+//todo........---------------------------------
 .todo-main {
     display: flex;
     width: 700px;
@@ -39,3 +40,39 @@
 .todo-list-checker {
 }
 
+//dogshop........---------------------------------
+
+.dogshop-titlebar {
+  height:100px !important;
+  background-color: white !important;
+}
+
+.dogshop-title {
+    color: black !important;
+    font-style: oblique;
+    font-weight: 1000 !important;
+    font-size: 2rem !important;
+    padding-left: 2rem !important;
+    padding-top: 2rem !important;
+}
+
+.dogshop-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: green;
+    height: 70px;
+    padding-left: 3rem;
+    padding-right: 5rem;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+
+}
+
+.container {
+    max-width: 100% !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    padding : 0 !important;
+}
